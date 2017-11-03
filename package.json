@@ -1,0 +1,14 @@
+{
+  "name": "my-tweet-web",
+  "version": "1.0.0",
+  "description": "an application for users to post and view tweets",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "hapi": "^17.0.0-rc10"
+  }
+}
