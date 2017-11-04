@@ -5,10 +5,11 @@ const User = require("../models/user");
 exports.home = {
   handler: function (request, reply) {
     Tweet.find({})
-        .then(tweets => {
+        .populate("tweeter")
+        .then(allTweets => {
           reply.view("home", {
-            title: "Create a tweet",
-            tweets: tweets
+            title: "Timeline",
+            tweets: allTweets
           });
         })
         .catch(err => {
@@ -16,7 +17,6 @@ exports.home = {
         });
   }
 };
-
 
 exports.tweet = {
   handler: function (request, reply) {

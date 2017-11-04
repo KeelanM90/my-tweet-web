@@ -1,0 +1,12 @@
+<section class="ui raised segment">
+    <div class="ui divided list">
+        {{#each tweets}}
+            <div class="item">
+                <div class="content">
+                    <a class="header">{{tweeter.firstName}} {{tweeter.lastName}}</a>
+                    <div class="description">{{tweet}}</div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>

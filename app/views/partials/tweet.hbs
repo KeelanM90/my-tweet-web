@@ -1,7 +1,7 @@
 <section class="ui raised segment">
   <div class="ui grid ">
     <div class="ui form six wide column">
-      <div class="ui stacked segment">
+      <div class="ui segment">
         <form action="/tweet" method="POST">
           <div class="grouped inline fields">
             <div class="text"><h3>Tweet</h3></div>
@@ -16,8 +16,8 @@
         {{> formerror }}
       </div>
     </div>
-    <aside class="six wide column">
-      <img src="images/homer4.jpeg" class="ui medium image">
+    <aside class="ten wide column">
+        {{> timeline }}
     </aside>
   </div>
 </section>

@@ -27,12 +27,12 @@
       "tweeter": "->users.homer"
     },
     "two": {
-      "tweet": "My first tweet",
+      "tweet": "My second tweet",
       "tweeter": "->users.homer"
     },
     "three": {
       "tweet": "My first tweet",
-      "tweeter": "->users.homer"
+      "tweeter": "->users.bart"
     }
   }
 }
