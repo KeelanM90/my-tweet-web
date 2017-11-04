@@ -1,5 +1,6 @@
 'use strict';
 const User = require('../models/user');
+const Admin = require('../models/admin');
 const Joi = require('joi');
 
 exports.main = {
@@ -61,7 +62,7 @@ exports.authenticate = {
       if (foundUser && foundUser.password === user.password) {
         request.cookieAuth.set({
           loggedIn: true,
-          loggedInUser: user.email,
+          loggedInUser: foundUser.email,
         });
         reply.redirect('/home');
       } else {
@@ -111,6 +112,7 @@ exports.userRegister = {
 exports.viewSettings = {
   handler: function (request, reply) {
     const userEmail = request.auth.credentials.loggedInUser;
+
     User.findOne({ email: userEmail }).then(foundUser => {
       reply.view('settings', { title: 'Edit Account Settings', user: foundUser });
     }).catch(err => {
@@ -145,9 +147,9 @@ exports.updateSettings = {
 
   handler: function (request, reply) {
     const editedUser = request.payload;
-    const loggedInUserEmail = request.auth.credentials.loggedInUser;
+    const userEmail = request.auth.credentials.loggedInUser;
 
-    User.findOne({ email: loggedInUserEmail }).then(user => {
+    User.findOne({ email: userEmail }).then(user => {
       user.firstName = editedUser.firstName;
       user.lastName = editedUser.lastName;
       user.email = editedUser.email;

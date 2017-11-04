@@ -1,23 +1,14 @@
-<section class="ui raised segment">
-  <div class="ui grid ">
-    <div class="ui form six wide column">
-      <div class="ui segment">
-        <form action="/tweet" method="POST">
-          <div class="grouped inline fields">
+<div class="ui segment">
+    <form action="/tweet" method="POST">
+        <div class="grouped inline fields">
             <div class="text"><h3>Tweet</h3></div>
             <div class="field">
-              <div class="ui fluid input">
-                <input type="text" maxlength="140" placeholder="Tweet text" name="tweet">
-              </div>
+                <div class="ui fluid input">
+                    <input type="text" maxlength="140" placeholder="Tweet text" name="tweet">
+                </div>
             </div>
-          </div>
-          <button class="ui right aligned blue submit button">Tweet</button>
-        </form>
-        {{> formerror }}
-      </div>
-    </div>
-    <aside class="ten wide column">
-        {{> timeline }}
-    </aside>
-  </div>
-</section>
+        </div>
+        <button class="ui right aligned blue submit button">Tweet</button>
+    </form>
+    {{> formerror }}
+</div>

@@ -14,6 +14,8 @@ module.exports = [
 
   { method: "GET", path: "/home", config: Tweets.home },
   { method: "POST", path: "/tweet", config: Tweets.tweet },
+  { method: "GET", path: "/profile/{id}", config: Tweets.viewProfile },
+  { method: "GET", path: "/profile", config: Tweets.viewProfile },
 
   {
     method: "GET",

@@ -23,16 +23,24 @@
   "tweets": {
     "_model": "Tweet",
     "one": {
-      "tweet": "My first tweet",
+      "tweet": "Halloween's no different than any other day of the year when I steal candy from strangers' houses and dress up like a lazy zombie.",
       "tweeter": "->users.homer"
     },
     "two": {
-      "tweet": "My second tweet",
+      "tweet": "Sorry I've been off Twitter, I've been hibernating since February but I set my alarm to go off if candy was near by.",
       "tweeter": "->users.homer"
     },
     "three": {
-      "tweet": "My first tweet",
+      "tweet": "have no fear!  The Bart-Man is still here, and still reading your tweets. Hit me up! (I still have 2 weeks of freedom b4 school starts back)",
       "tweeter": "->users.bart"
+    }
+  },
+  "admins": {
+    "_model": "Admin",
+    "ned": {
+      "name": "Bart",
+      "email": "bart@simpson.com",
+      "password": "secret"
     }
   }
 }

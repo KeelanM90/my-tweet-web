@@ -1,6 +1,8 @@
 "use strict";
 const Tweet = require("../models/tweet");
 const User = require("../models/user");
+const Joi = require("joi");
+
 
 exports.home = {
   handler: function (request, reply) {
@@ -9,7 +11,7 @@ exports.home = {
         .then(allTweets => {
           reply.view("home", {
             title: "Timeline",
-            tweets: allTweets
+            tweets: allTweets,
           });
         })
         .catch(err => {
@@ -19,6 +21,7 @@ exports.home = {
 };
 
 exports.tweet = {
+
   handler: function (request, reply) {
     let userEmail = request.auth.credentials.loggedInUser;
 
@@ -30,7 +33,7 @@ exports.tweet = {
           if(tweet.tweet.length > 140) {
             tweet.tweet = tweet.tweet.substring(0,140);
           }
-          tweet.tweeter = user._id;
+          tweet.tweeter = user.id;
           return tweet.save();
         })
         .then(newTweet => {
@@ -41,3 +44,28 @@ exports.tweet = {
         });
   }
 };
+
+exports.viewProfile = {
+
+  handler: function (request, reply) {
+    let userEmail = request.auth.credentials.loggedInUser;
+
+    Tweet.find({ })
+        .populate("tweeter")
+        .then(allTweets => {
+          for (let i = allTweets.length - 1; i >= 0; i--) {
+            if (allTweets[i].tweeter.email !== userEmail) {
+              allTweets.splice(i, 1)
+            }
+          }
+          reply.view("profile", {
+            title: "Timeline",
+            tweets: allTweets,
+          });
+        })
+        .catch(err => {
+          reply.redirect("/");
+        });
+  }
+};
+
