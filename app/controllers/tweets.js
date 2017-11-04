@@ -27,7 +27,10 @@ exports.tweet = {
 
     User.findOne({email: userEmail})
         .then(user => {
-          tweet.user = user._id;
+          if(tweet.tweet.length > 140) {
+            tweet.tweet = tweet.tweet.substring(0,140);
+          }
+          tweet.tweeter = user._id;
           return tweet.save();
         })
         .then(newTweet => {
