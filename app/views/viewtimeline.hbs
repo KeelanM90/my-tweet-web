@@ -1,0 +1,20 @@
+{{#if isLoggedInUser}}
+    {{> mainmenu _id="profile" }}
+    {{else}}
+    {{> mainmenu }}
+{{/if}}
+<section class="ui raised segment">
+    <div class="ui grid ">
+        <div class="ui form six wide column">
+            {{> tweet }}
+        </div>
+        <aside class="ten wide column">
+            {{#if isLoggedInUser}}
+                {{> deletabletimeline }}
+            {{else}}
+                {{> timeline }}
+            {{/if}}
+
+        </aside>
+    </div>
+</section>

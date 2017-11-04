@@ -30,8 +30,8 @@ exports.tweet = {
 
     User.findOne({email: userEmail})
         .then(user => {
-          if(tweet.tweet.length > 140) {
-            tweet.tweet = tweet.tweet.substring(0,140);
+          if (tweet.tweet.length > 140) {
+            tweet.tweet = tweet.tweet.substring(0, 140);
           }
           tweet.tweeter = user.id;
           return tweet.save();
@@ -45,12 +45,24 @@ exports.tweet = {
   }
 };
 
-exports.viewProfile = {
+exports.viewTimeline = {
 
   handler: function (request, reply) {
-    let userEmail = request.auth.credentials.loggedInUser;
+    let userEmail = request.params.email;
+    let LoggedInUserEmail = request.auth.credentials.loggedInUser;
 
-    Tweet.find({ })
+    let isLoggedInUser = true;
+
+    if (userEmail != LoggedInUserEmail && userEmail != null) {
+      isLoggedInUser = false;
+    } else {
+      userEmail = LoggedInUserEmail;
+    }
+
+    console.log("email: ", userEmail)
+    console.log("loggedemail: ", LoggedInUserEmail)
+    console.log("islogged: ", isLoggedInUser)
+    Tweet.find({})
         .populate("tweeter")
         .then(allTweets => {
           for (let i = allTweets.length - 1; i >= 0; i--) {
@@ -58,14 +70,15 @@ exports.viewProfile = {
               allTweets.splice(i, 1)
             }
           }
-          reply.view("profile", {
-            title: "Timeline",
+          reply.view("viewtimeline", {
+            title: "Timeline - ",
             tweets: allTweets,
+            isLoggedInUser: isLoggedInUser,
           });
         })
         .catch(err => {
+          console.log(err);
           reply.redirect("/");
         });
   }
 };
-
