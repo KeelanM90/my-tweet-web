@@ -1,12 +1,58 @@
-{{> mainmenu _id="profile" }}
+{{> adminmenu }}
 
 <section class="ui raised segment">
-    <div class="ui grid">
+    <div class="ui grid ">
         <div class="ui form six wide column">
-            {{> tweet }}
+            <h1 class="segment">{{user.firstName}} {{user.lastName}}</h1>
         </div>
-        <aside class="ten wide column">
-            {{> timeline }}
-        </aside>
+        {{#if tweets}}
+            <aside class="ten wide column">
+                <form action="/deleteselectedtweets/{{user.email}}" method="POST">
+                    <table class="ui padded celled table">
+                        <thead>
+                        <tr>
+                            <th>
+                                <i class="twitter icon"></i>Tweet
+                            </th>
+                            <th><i class="trash icon"></i></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{#each tweets}}
+                            <tr>
+                                <td>
+                                    <div class="item">
+                                        <div class="content">
+                                            <h2 class="header">{{tweeter.firstName}} {{tweeter.lastName}}</h2>
+                                            <div class="description">{{tweet}}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="ui checkbox">
+                                        <input type="checkbox" name="{{id}}">
+                                        <label id="{{id}}"></label>
+                                    </div>
+                                </td>
+                            </tr>
+                        {{/each}}
+                        </tbody>
+                        <tfoot class="full-width">
+                        <tr>
+                            <th colspan="2">
+
+                                <button class="ui right floated small red labeled icon button">
+                                    <i class="trash icon"></i> Delete Selected
+                                </button>
+                                <a class="ui small red labeled icon button" href="/deleteuserstweets/{{user.email}}">
+                                    <i class="trash icon"></i> Delete All
+                                </a>
+                            </th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </form>
+            </aside>
+        {{/if}}
     </div>
 </section>

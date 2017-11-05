@@ -50,11 +50,11 @@ exports.viewTimeline = {
   handler: function (request, reply) {
     let userEmail = request.params.email;
     let LoggedInUserEmail = request.auth.credentials.loggedInUser;
+    let LoggedInAdminEmail = request.auth.credentials.loggedInAdmin;
 
     let deletableTweets = true;
 
     if (userEmail == null) {
-      console.log("profile");
       userEmail = LoggedInUserEmail;
     } else if (userEmail != LoggedInUserEmail) {
       deletableTweets = false;
@@ -71,12 +71,21 @@ exports.viewTimeline = {
                     allTweets.splice(i, 1)
                   }
                 }
-                reply.view("viewtimeline", {
-                  title: "Timeline - " + user.firstName + " " + user.lastName,
-                  tweets: allTweets,
-                  tweetsDeletable: deletableTweets,
-                  email: userEmail,
-                });
+                if (LoggedInAdminEmail == null) {
+                  reply.view("viewtimeline", {
+                    title: "Timeline - " + user.firstName + " " + user.lastName,
+                    tweets: allTweets,
+                    tweetsDeletable: deletableTweets,
+                    email: userEmail,
+                  });
+                } else {
+                  reply.view("viewuser", {
+                    title: "View User - " + user.firstName + " " + user.lastName,
+                    tweets: allTweets,
+                    tweetsDeletable: deletableTweets,
+                    user: user,
+                  });
+                }
               });
         })
         .catch(err => {
@@ -105,6 +114,7 @@ exports.deleteUsersTweets = {
 
 exports.deleteSelectedTweets = {
   handler: function (request, reply) {
+    let userEmail = request.params.email;
     let chosenTweets = Object.keys(request.payload);
 
     for (let i = 0; i < chosenTweets.length; i++) {
@@ -115,7 +125,7 @@ exports.deleteSelectedTweets = {
             console.log(err);
           });
     }
-    reply.redirect("/viewtimeline");
+    reply.redirect("/viewtimeline/" + userEmail);
   }
 };
 

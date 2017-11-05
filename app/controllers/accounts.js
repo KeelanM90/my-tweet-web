@@ -193,3 +193,37 @@ exports.admin = {
   },
 };
 
+
+exports.addUser = {
+  auth: false,
+
+  validate: {
+    payload: {
+      firstName: Joi.string().required(),
+      lastName: Joi.string().required(),
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+    },
+
+    options: {
+      abortEarly: false,
+    },
+
+    failAction: function (request, reply, source, error) {
+      reply.view('admin', {
+        title: 'Signup error',
+        errors: error.data.details,
+      }).code(400);
+    },
+  },
+
+  handler: function (request, reply) {
+    const user = new User(request.payload);
+
+    user.save().then(newUser => {
+      reply.redirect('/admin');
+    }).catch(err => {
+      reply.redirect('/');
+    });
+  },
+};

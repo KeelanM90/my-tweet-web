@@ -1,16 +1,27 @@
 {{> adminmenu id="admin"}}
 
-<div class="ui raised segment">
-    <div class="ui relaxed divided list">
-        {{#each users}}
-            <div class="item">
-                <div class="content">
-                    <div class="header">
-                        <a href="/viewuser/{{email}}">{{firstName}} {{lastName}}</a>
-                        <a href="/deleteuser/{{email}}"><i class="red icon trash"></i></a>
+<div class="ui grid">
+    <div class="six wide raised column">
+        <div class="ui relaxed divided list segment">
+            {{#each users}}
+                <div class="item">
+                    <div class="content">
+                        <div class="header">
+                            <a href="/viewtimeline/{{email}}">{{firstName}} {{lastName}}</a>
+                            <a href="/deleteuser/{{email}}"><i class="right floated red icon trash"></i></a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {{/each}}
+            {{/each}}
+        </div>
+    </div>
+    <div class="ten wide column">
+        <div class="ui stacked fluid form segment">
+            <form action="/adduser" method="POST">
+                <h3 class="ui header">Add User</h3>
+                {{> signupformfields }}
+            </form>
+            {{> formerror }}
+        </div>
     </div>
 </div>

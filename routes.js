@@ -5,6 +5,7 @@ const Assets = require("./app/controllers/assets");
 module.exports = [
   { method: "GET", path: "/", config: Accounts.main },
   { method: "POST", path: "/register", config: Accounts.userRegister },
+  { method: "POST", path: "/adduser", config: Accounts.addUser },
   { method: "GET", path: "/signup", config: Accounts.signup },
   { method: "GET", path: "/login", config: Accounts.login },
   { method: "POST", path: "/login", config: Accounts.authenticate },
@@ -17,7 +18,7 @@ module.exports = [
   { method: "GET", path: "/viewtimeline/{email}", config: Tweets.viewTimeline },
   { method: "GET", path: "/viewtimeline", config: Tweets.viewTimeline },
   { method: "GET", path: "/deleteuserstweets/{email}", config: Tweets.deleteUsersTweets },
-  { method: "POST", path: "/deleteselectedtweets", config: Tweets.deleteSelectedTweets },
+  { method: "POST", path: "/deleteselectedtweets/{email}", config: Tweets.deleteSelectedTweets },
 
 
   { method: "GET", path: "/admin", config: Accounts.admin },
