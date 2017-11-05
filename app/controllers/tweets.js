@@ -103,3 +103,37 @@ exports.deleteUsersTweets = {
   }
 };
 
+exports.deleteSelectedTweets = {
+  handler: function (request, reply) {
+    let chosenTweets = Object.keys(request.payload);
+
+    for (let i = 0; i < chosenTweets.length; i++) {
+      Tweet.remove({_id: chosenTweets[i]})
+          .then(result => {
+          })
+          .catch(err => {
+            console.log(err);
+          });
+    }
+    reply.redirect("/viewtimeline");
+  }
+};
+
+exports.deleteUser = {
+  handler: function (request, reply) {
+    let userEmail = request.params.email;
+
+    User.findOne({email: userEmail}).then(user => {
+      Tweet.remove({tweeter: user.id})
+          .then(result => {
+            User.remove({email: userEmail})
+                .then(result => {
+                  reply.redirect("/admin");
+                })
+          })
+    })
+        .catch(err => {
+          console.log(err);
+        });
+  }
+};

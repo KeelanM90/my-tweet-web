@@ -1,0 +1,16 @@
+{{> adminmenu id="admin"}}
+
+<div class="ui raised segment">
+    <div class="ui relaxed divided list">
+        {{#each users}}
+            <div class="item">
+                <div class="content">
+                    <div class="header">
+                        <a href="/viewuser/{{email}}">{{firstName}} {{lastName}}</a>
+                        <a href="/deleteuser/{{email}}"><i class="red icon trash"></i></a>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>

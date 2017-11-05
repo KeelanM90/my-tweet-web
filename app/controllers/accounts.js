@@ -173,3 +173,23 @@ exports.updateSettings = {
   },
 
 };
+
+
+exports.admin = {
+  handler: function (request, reply) {
+    const adminEmail = request.auth.credentials.loggedInAdmin;
+
+    User.find({})
+        .then(users => {
+          Admin.findOne({email: adminEmail}).then(foundAdmin => {
+            reply.view('admin', {
+              title: foundAdmin.name,
+              users: users,
+            });
+          });
+        }).catch(err => {
+      reply.redirect('/');
+    });
+  },
+};
+
