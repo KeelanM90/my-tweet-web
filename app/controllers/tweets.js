@@ -51,28 +51,49 @@ exports.viewTimeline = {
     let userEmail = request.params.email;
     let LoggedInUserEmail = request.auth.credentials.loggedInUser;
 
-    let isLoggedInUser = true;
+    let deletableTweets = true;
 
-    if (userEmail != LoggedInUserEmail && userEmail != null) {
-      isLoggedInUser = false;
-    } else {
+    if (userEmail == null) {
+      console.log("profile");
       userEmail = LoggedInUserEmail;
+    } else if (userEmail != LoggedInUserEmail) {
+      deletableTweets = false;
     }
 
+    User.findOne({email: userEmail})
+        .then(user => {
 
-    Tweet.find({})
-        .populate("tweeter")
-        .then(allTweets => {
-          for (let i = allTweets.length - 1; i >= 0; i--) {
-            if (allTweets[i].tweeter.email !== userEmail) {
-              allTweets.splice(i, 1)
-            }
-          }
-          let user = allTweets[0].tweeter;
-          reply.view("viewtimeline", {
-            title: "Timeline - " + user.firstName + " " + user.lastName,
-            tweets: allTweets,
-            isLoggedInUser: isLoggedInUser,
+          Tweet.find({})
+              .populate("tweeter")
+              .then(allTweets => {
+                for (let i = allTweets.length - 1; i >= 0; i--) {
+                  if (allTweets[i].tweeter.email !== userEmail) {
+                    allTweets.splice(i, 1)
+                  }
+                }
+                reply.view("viewtimeline", {
+                  title: "Timeline - " + user.firstName + " " + user.lastName,
+                  tweets: allTweets,
+                  tweetsDeletable: deletableTweets,
+                  email: userEmail,
+                });
+              });
+        })
+        .catch(err => {
+          console.log(err);
+          reply.redirect("/");
+        });
+  }
+};
+
+exports.deleteUsersTweets = {
+  handler: function (request, reply) {
+    let userEmail = request.params.email;
+
+    User.findOne({email: userEmail})
+        .then(user => {
+          Tweet.remove({tweeter: user.id}).then(result => {
+            reply.redirect("/viewtimeline/" + userEmail);
           });
         })
         .catch(err => {
@@ -81,3 +102,4 @@ exports.viewTimeline = {
         });
   }
 };
+

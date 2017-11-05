@@ -33,6 +33,14 @@
     "three": {
       "tweet": "have no fear!  The Bart-Man is still here, and still reading your tweets. Hit me up! (I still have 2 weeks of freedom b4 school starts back)",
       "tweeter": "->users.bart"
+    },
+    "four": {
+      "tweet": "2Halloween's no different than any other day of the year when I steal candy from strangers' houses and dress up like a lazy zombie.",
+      "tweeter": "->users.homer"
+    },
+    "five": {
+      "tweet": "2Sorry I've been off Twitter, I've been hibernating since February but I set my alarm to go off if candy was near by.",
+      "tweeter": "->users.homer"
     }
   },
   "admins": {

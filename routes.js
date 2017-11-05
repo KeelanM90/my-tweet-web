@@ -16,6 +16,7 @@ module.exports = [
   { method: "POST", path: "/tweet", config: Tweets.tweet },
   { method: "GET", path: "/viewtimeline/{email}", config: Tweets.viewTimeline },
   { method: "GET", path: "/viewtimeline", config: Tweets.viewTimeline },
+  { method: "GET", path: "/deleteuserstweets/{email}", config: Tweets.deleteUsersTweets },
 
   {
     method: "GET",

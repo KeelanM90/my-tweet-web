@@ -1,6 +1,6 @@
 {{#if isLoggedInUser}}
     {{> mainmenu _id="profile" }}
-    {{else}}
+{{else}}
     {{> mainmenu }}
 {{/if}}
 <section class="ui raised segment">
@@ -8,13 +8,14 @@
         <div class="ui form six wide column">
             {{> tweet }}
         </div>
-        <aside class="ten wide column">
-            {{#if isLoggedInUser}}
-                {{> deletabletimeline }}
-            {{else}}
-                {{> timeline }}
-            {{/if}}
-
-        </aside>
+        {{#if tweets}}
+            <aside class="ten wide column">
+                {{#if tweetsDeletable}}
+                    {{> deletabletimeline }}
+                {{else}}
+                    {{> timeline }}
+                {{/if}}
+            </aside>
+        {{/if}}
     </div>
 </section>

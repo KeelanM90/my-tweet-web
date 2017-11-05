@@ -70,7 +70,7 @@ exports.authenticate = {
           if (foundAdmin && foundAdmin.password === user.password) {
             request.cookieAuth.set({
               loggedIn: true,
-              loggedInUser: foundAdmin.email,
+              loggedInAdmin: foundAdmin.email,
             });
             reply.redirect('/admin');
           } else {

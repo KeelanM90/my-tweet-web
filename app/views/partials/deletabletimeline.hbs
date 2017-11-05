@@ -1,12 +1,47 @@
-<section class="ui raised segment">
-    <div class="ui divided list">
+<form action="/deleteselectedtweets" method="POST">
+    <table class="ui padded celled table">
+        <thead>
+        <tr>
+            <th>
+                <i class="twitter icon"></i>Tweet
+            </th>
+            <th><i class="trash icon"></i></th>
+        </tr>
+        </thead>
+        <tbody>
         {{#each tweets}}
-            <div class="item">
-                <div class="content">
-                    <a class="header" href="/viewtimeline/{{tweeter.email}}">{{tweeter.firstName}} {{tweeter.lastName}}</a>
-                    <div class="description">{{tweet}}</div>
-                </div>
-            </div>
+            <tr>
+                <td>
+                    <div class="item">
+                        <div class="content">
+                            <a class="header"
+                               href="/viewtimeline/{{tweeter.email}}">{{tweeter.firstName}} {{tweeter.lastName}}</a>
+                            <div class="description">{{tweet}}</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="ui checkbox">
+                        <input type="checkbox" name="checkbox{{id}}">
+                        <label id="{{id}}"></label>
+                    </div>
+                </td>
+            </tr>
         {{/each}}
-    </div>
-</section>
+        </tbody>
+        <tfoot class="full-width">
+        <tr>
+            <th colspan="2">
+
+                <button class="ui right floated small red labeled icon button">
+                    <i class="trash icon"></i> Delete Selected
+                </button>
+                <a class="ui small red labeled icon button" href="/deleteuserstweets/{{email}}">
+                    <i class="trash icon"></i> Delete All
+                </a>
+            </th>
+        </tr>
+        </tfoot>
+    </table>
+
+</form>
