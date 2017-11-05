@@ -59,9 +59,7 @@ exports.viewTimeline = {
       userEmail = LoggedInUserEmail;
     }
 
-    console.log("email: ", userEmail)
-    console.log("loggedemail: ", LoggedInUserEmail)
-    console.log("islogged: ", isLoggedInUser)
+
     Tweet.find({})
         .populate("tweeter")
         .then(allTweets => {
@@ -70,8 +68,9 @@ exports.viewTimeline = {
               allTweets.splice(i, 1)
             }
           }
+          let user = allTweets[0].tweeter;
           reply.view("viewtimeline", {
-            title: "Timeline - ",
+            title: "Timeline - " + user.firstName + " " + user.lastName,
             tweets: allTweets,
             isLoggedInUser: isLoggedInUser,
           });

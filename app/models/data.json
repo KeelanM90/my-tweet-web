@@ -38,8 +38,8 @@
   "admins": {
     "_model": "Admin",
     "ned": {
-      "name": "Bart",
-      "email": "bart@simpson.com",
+      "name": "Ned Flanders",
+      "email": "ned@flanders.com",
       "password": "secret"
     }
   }

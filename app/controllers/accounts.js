@@ -6,21 +6,21 @@ const Joi = require('joi');
 exports.main = {
   auth: false,
   handler: function (request, reply) {
-    reply.view('main', { title: 'Welcome to Tweeter' });
+    reply.view('main', {title: 'Welcome to Tweeter'});
   },
 };
 
 exports.signup = {
   auth: false,
   handler: function (request, reply) {
-    reply.view('signup', { title: 'Sign up for Tweeter' });
+    reply.view('signup', {title: 'Sign up for Tweeter'});
   },
 };
 
 exports.login = {
   auth: false,
   handler: function (request, reply) {
-    reply.view('login', { title: 'Login to Tweeter' });
+    reply.view('login', {title: 'Login to Tweeter'});
   },
 };
 
@@ -58,7 +58,7 @@ exports.authenticate = {
 
   handler: function (request, reply) {
     const user = request.payload;
-    User.findOne({ email: user.email }).then(foundUser => {
+    User.findOne({email: user.email}).then(foundUser => {
       if (foundUser && foundUser.password === user.password) {
         request.cookieAuth.set({
           loggedIn: true,
@@ -66,7 +66,17 @@ exports.authenticate = {
         });
         reply.redirect('/home');
       } else {
-        reply.redirect('/signup');
+        Admin.findOne({email: user.email}).then(foundAdmin => {
+          if (foundAdmin && foundAdmin.password === user.password) {
+            request.cookieAuth.set({
+              loggedIn: true,
+              loggedInUser: foundAdmin.email,
+            });
+            reply.redirect('/admin');
+          } else {
+            reply.redirect('/signup');
+          }
+        });
       }
     }).catch(err => {
       reply.redirect('/');
@@ -113,8 +123,8 @@ exports.viewSettings = {
   handler: function (request, reply) {
     const userEmail = request.auth.credentials.loggedInUser;
 
-    User.findOne({ email: userEmail }).then(foundUser => {
-      reply.view('settings', { title: 'Edit Account Settings', user: foundUser });
+    User.findOne({email: userEmail}).then(foundUser => {
+      reply.view('settings', {title: 'Edit Account Settings', user: foundUser});
     }).catch(err => {
       reply.redirect('/');
     });
@@ -149,14 +159,14 @@ exports.updateSettings = {
     const editedUser = request.payload;
     const userEmail = request.auth.credentials.loggedInUser;
 
-    User.findOne({ email: userEmail }).then(user => {
+    User.findOne({email: userEmail}).then(user => {
       user.firstName = editedUser.firstName;
       user.lastName = editedUser.lastName;
       user.email = editedUser.email;
       user.password = editedUser.password;
       return user.save();
     }).then(user => {
-      reply.view('settings', { title: 'Edit Account Settings', user: user });
+      reply.view('settings', {title: 'Edit Account Settings', user: user});
     }).catch(err => {
       reply.redirect('/');
     });
